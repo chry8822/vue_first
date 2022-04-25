@@ -63,8 +63,8 @@
   <button @click="goodbye">작별하기</button>
   <div @click="getMousePosition" class="box"></div> -->
 
-  <button @click="addNumber($event,10)">10더하기</button>
-  <button @click="addNumber($event,100)">100더하기</button>
+  <button @click="mouseOffset($event,10)">10더하기</button>
+  <button @click="mouseOffset($event,100)">100더하기</button>
   <!-- $event 를 인자로 넣어주면 뷰에서 발생하는 이벤트를 넘겨주게 된다. -->
 
  </div> 
@@ -121,7 +121,7 @@ export default {
     goodbye(){
       this.message = "잘가세용"
     },
-    addNumber(e,value){
+    mouseOffset(e,value){
       e.pageX
       this.message = `마우스 좌표 ${e.pageX}와 더하기 ${value}는 ${e.pageX + value} 입니다.`;
     },
@@ -129,6 +129,9 @@ export default {
       if(this.count > 0){
         this.count -=1;
       }
+    },
+    addNumber(x){
+      this.count += x;
     }
     // 함수는 methods 안에 명시하고 data() 안에 있는 데이터를 바인딩 하려면 this 를 사용해야한다. 그리고 화살표 함수는 상위 스코프의 영향을 받기 때문에 화살표 함수로 쓰고 this 를 사용하면 undefined 를 출력 그래서 일반 함수로 사용하는걸 권장 
   },

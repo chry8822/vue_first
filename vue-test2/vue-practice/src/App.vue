@@ -25,6 +25,37 @@
   <!-- 오브젝트로 만든 스타일 적용 -->
   <p v-bind:style="[titleStyle, basicStyle]">Array Style</p>
   <!-- 오브젝트로 만든 2개의 스타일은 배열로 둘다 적용하기 -->
+  <h2 class="line-thought">line-through</h2>
+  <h2 v-bind:class="textDcoration" class="text-red">line-through v-bind</h2>
+  <!-- 동적으로 부여한 클래스와 스태틱하게 부여한 클래스의 스타일이 모두 적용 -->
+
+  <h2 :class="idDone === true ? 'line-thought' : 'highlight'">
+    조건에 따른 클래스 적용
+  </h2>
+  <!-- 조건에 따른 클래스 부여 (삼항연산자,) 
+    조건이 투루 이면 line-thought 클래스 적용
+    조건이 폴스 이면 highlight 클래스 적용
+   -->
+  <h2 :class="{ highlight: idDone === false, 'text-red': myName === 'chrys' }">
+    Object 형태의 동적 클래스
+  </h2>
+  <!-- 오브젝트 형태로 동적 클래스 부여하기  { 클래스이름: 조건 } 
+    오브젝트 형태로 부여하면 한번에 여러가지의 클래스를 적용할수 있다.
+  -->
+
+  <h2
+    :class="[
+      isDone !== true ? 'line-thought' : 'highlight',
+      myName === 'chrys' ? 'text-green' : 'text-red',
+    ]"
+  >
+    배열 형태의 동적 클래스
+  </h2>
+
+  <!-- 배열형태로 동적 클래스 부여 
+    배열형태로 삼항연산자로 조건을 주어서 클래스를 동적으로 줄수 있다. 
+    오브젝트와 마찬가지로 다수의 클래스를 부여 가능하다
+   -->
 </template>
 
 <script>
@@ -32,6 +63,8 @@ export default {
   name: "App",
   data() {
     return {
+      idDone: false,
+      textDcoration: "line-thought",
       myName: "chrys",
       year: 2022,
       inputType: "color",
@@ -72,5 +105,18 @@ export default {
 #content {
   color: blue;
   background: yellow;
+}
+.line-thought {
+  text-decoration: line-through;
+}
+.text-red {
+  color: red;
+}
+.text-green {
+  color: green;
+}
+.highlight {
+  background: royalblue;
+  font-weight: bold;
 }
 </style>

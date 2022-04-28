@@ -56,6 +56,72 @@
     배열형태로 삼항연산자로 조건을 주어서 클래스를 동적으로 줄수 있다. 
     오브젝트와 마찬가지로 다수의 클래스를 부여 가능하다
    -->
+
+  <h1>{{ user2.name }}</h1>
+  <h1 v-text="user2.name"></h1>
+  <!-- 머스태치 문법과 v-text 둘다 데이터에 값을 가져와서 사용 데이터의 값이 변하면 따라서 변한다-->
+
+  <input type="text" v-model="user2.name" />
+  <!-- v-model 연결된 값이 변하면 기존의 연결된 값들도 함께 변하게 된다. -->
+  <h1 v-once v-text="user2.name"></h1>
+  <!-- 하지만 v-once 를 사용하면 최초의 렌더링된 값을 기억하고 그후에 변화된 값은 적용되지 않는다. -->
+
+  <h2 v-if="showName">My name is {{ user2.name }}</h2>
+  <h2 v-else>이름을 보여줄수 없습니다.</h2>
+
+  <h2 v-if="user2.age > 20">당신은 성인입니다.</h2>
+  <h2 v-else-if="user2.age > 14 && user2.age < 20">당신은 청소년 입니다.</h2>
+  <h2 v-else>당신은 어린이 입니다.</h2>
+
+  <h1 v-if="showName">{{ user2.name }} IF</h1>
+  <h1 v-show="showName">{{ user2.name }} SHOW</h1>
+
+  <ul>
+    <template v-if="question === 'frontend'">
+      <li>HTML은 재미있나요?></li>
+      <li>CSS은 재미있나요?></li>
+      <li>JavaScript는 재미있나요?></li>
+    </template>
+    <template v-if="question !== 'frontend'">
+      <li>Java는 재미있나요?></li>
+      <li>Python은 재미있나요?></li>
+      <li>C#은 재미있나요?></li>
+    </template>
+  </ul>
+  <!-- 조건부 렌더링시 모든 요소에 조건을 걸지말고 상위 엘리먼트를 만들어서 해당 엘리먼트에만 조건을 주어서 효율을 높인다. -->
+  <!--  의미 없는 태그인 template 를 사용하면 개발자 도구에서 엘리먼트 확인시 나타나지 않는다. (웹표준을 지키면서 사용할수 있다.)  -->
+
+  <div>
+    {{ fruits }}
+  </div>
+  <div>
+    <ul>
+      <li class="fruits" v-for="(item, index) in fruits" :key="index">
+        {{ item }}
+      </li>
+      <!-- 키값을 바인딩 해야한다 v-bind:를 사용하거나 : 콜론을 꼭 key 와 함께 붙혀 사용 한다. -->
+    </ul>
+  </div>
+
+  <h2 v-for="(value, key, index) in user" :key="key">
+    {{ key }} :: {{ value }} 해당 인덱스 {{ index }}
+  </h2>
+  <!-- 객체를 반복문 돌릴때는 값, 키, 인덱스를 받아올수 있고 key값은 key로 줄수있다. -->
+
+  <p v-for="n in 10" :key="n">{{ n }}</p>
+  <!-- 숫자도 반복문으로 돌릴수있다. -->
+
+  <div v-for="(animal, index) in animals" :key="index">
+    <h2>Animal == {{ animal.name }}</h2>
+    <h3>Food</h3>
+    <ul>
+      <li v-for="(food, foodIndex) in animal.food" :key="foodIndex">
+        {{ food }}
+      </li>
+      <li>size - {{ animal.size }}</li>
+    </ul>
+  </div>
+  <!-- 중첩 반복문 -->
 </template>
 
 <script>
@@ -63,6 +129,24 @@ export default {
   name: "App",
   data() {
     return {
+      animals: [
+        { name: "monkey", size: "medium", food: ["banana", "apple"] },
+        { name: "lion", size: "big", food: ["meat", "animal"] },
+        { name: "bird", size: "small", food: ["bug", "leaf"] },
+      ],
+      member: {
+        name: "helper",
+        age: 32,
+        job: "programmer",
+      },
+      fruits: ["banana", "strawberry", "apple", "melon"],
+      question: "frontend",
+      showName: true,
+      user2: {
+        name: "oh",
+        age: 15,
+        job: "programmer",
+      },
       idDone: false,
       textDcoration: "line-thought",
       myName: "chrys",
@@ -118,5 +202,11 @@ export default {
 .highlight {
   background: royalblue;
   font-weight: bold;
+}
+li {
+  list-style: none;
+}
+.fruits {
+  font-size: 30px;
 }
 </style>
